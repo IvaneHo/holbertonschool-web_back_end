@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""A function that returns a tuple (string, square of int/float as float), with type annotations."""
+"""A function that returns a tuple """
 from typing import Union, Tuple
 
 
