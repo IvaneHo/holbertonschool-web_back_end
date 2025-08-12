@@ -31,53 +31,43 @@ class Server:
         """
         if self.__indexed_dataset is None:
             dataset = self.dataset()
-            # NB: l'énoncé montre un truncated_dataset mais l'exemple de sortie
-            # indique qu'on indexe tout (Nb items ~ 19418). On suit l'exemple.
-            self.__indexed_dataset = {i: dataset[i] for i in range(len(dataset))}
+            self.__indexed_dataset = {
+                i: dataset[i] for i in range(len(dataset))
+            }
         return self.__indexed_dataset
 
     def get_hyper_index(self, index: int = None, page_size: int = 10) -> Dict[str, Any]:
         """
-        Return a page in a deletion-resilient way.
+        Return a page of the dataset with pagination info,
+        resilient to deletions between queries.
 
         Args:
-            index (int): Start index for the page (0-based). If None, starts at 0.
-            page_size (int): Number of items to return.
+            index (int): The index to start from (0-based). Defaults to 0.
+            page_size (int): The number of items per page.
 
         Returns:
-            Dict[str, Any]: {
-                "index": current start index,
-                "next_index": index to query next,
-                "page_size": number of items returned,
-                "data": list of rows
-            }
+            dict: Contains 'index', 'next_index', 'page_size', and 'data'.
         """
-        # Handle None as 0 (exigence de l'énoncé)
         if index is None:
             index = 0
 
-        # Validations
         assert isinstance(index, int) and index >= 0
         assert isinstance(page_size, int) and page_size > 0
-
-        indexed = self.indexed_dataset()
-        # On valide contre la taille d'origine du dataset (comme l'exemple)
         assert index < len(self.dataset())
 
-        data: List[List] = []
-        current = index
+        indexed_data = self.indexed_dataset()
+        data = []
+        current_index = index
+        total_items = len(self.dataset())
 
-        # Avance jusqu'à collecter page_size éléments encore présents
-        # ou jusqu'à épuisement des indices valides
-        upper_bound = len(self.dataset())
-        while len(data) < page_size and current < upper_bound:
-            if current in indexed:
-                data.append(indexed[current])
-            current += 1
+        while len(data) < page_size and current_index < total_items:
+            if current_index in indexed_data:
+                data.append(indexed_data[current_index])
+            current_index += 1
 
         return {
             "index": index,
-            "data": data,
+            "next_index": current_index if current_index < total_items else None,
             "page_size": len(data),
-            "next_index": current
+            "data": data
         }
