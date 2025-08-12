@@ -15,7 +15,7 @@ Methods:
 <status_count> status check
 """
 
-from pymongo import MongoClient
+from pymongo import MongoClient # type: ignore
 
 
 def log_stats():
