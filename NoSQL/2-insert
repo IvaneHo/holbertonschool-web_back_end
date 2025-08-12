@@ -1,2 +1,2 @@
-// my comment
+// Insert a document with name="Holberton school" into the school collection
 db.school.insert({ name: "Holberton school" })

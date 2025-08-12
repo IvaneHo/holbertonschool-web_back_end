@@ -1,2 +1,2 @@
-// my comment
+// Switch to database my_db or create it if it doesn't exist
 use my_db

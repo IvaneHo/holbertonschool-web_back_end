@@ -1,2 +1,2 @@
-// my comment
+// List all databases on the MongoDB server
 show dbs

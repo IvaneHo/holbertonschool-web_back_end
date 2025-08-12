@@ -1,4 +1,4 @@
-// my comment
+// Add or update the address="972 Mission street" field for all documents with name="Holberton school"
 db.school.update(
   { name: "Holberton school" },
   { $set: { address: "972 Mission street" } },
