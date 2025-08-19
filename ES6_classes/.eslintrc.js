@@ -1,3 +1,4 @@
+
 module.exports = {
     env: {
       browser: false,
@@ -18,7 +19,6 @@ module.exports = {
     },
     plugins: ['jest'],
     rules: {
-      'jest/no-large-snapshots': 'off',
       'max-classes-per-file': 'off',
       'no-underscore-dangle': 'off',
       'no-console': 'off',
@@ -32,10 +32,8 @@ module.exports = {
     overrides:[
       {
         files: ['*.js'],
-        rules: {
-        "jest/no-large-snapshots": "off",
-        },
         excludedFiles: 'babel.config.js',
       }
     ]
   };
+  
