@@ -1,7 +1,7 @@
-// 1-stdin.js
 console.log('Welcome to Holberton School, what is your name?');
 
 process.stdin.setEncoding('utf8');
+process.stdin.resume();
 
 process.stdin.on('data', (data) => {
   const name = data.toString().trim();
